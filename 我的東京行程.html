@@ -1,0 +1,500 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💖 我的東京自由行 (可翻頁版) 💖</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            line-height: 1.7;
+            color: #565656;
+            background-color: #fff0f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 25px 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 2px solid #ffcce7;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #ff69b4;
+        }
+        h2 {
+            font-size: 1.8em;
+            margin-top: 20px;
+            color: #1e90ff;
+            border-bottom: 2px dashed #ffcce7;
+            padding-bottom: 10px;
+        }
+        h3 {
+            font-size: 1.5em;
+            color: #ff6347;
+            margin-top: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 15px;
+            border: 2px solid #ffcce7;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+            vertical-align: top;
+            border-bottom: 1px solid #ffcce7;
+        }
+        th {
+            background-color: #fff0f5;
+            font-weight: 700;
+            color: #ff69b4;
+            width: 120px;
+        }
+        tr:last-child td { border-bottom: none; }
+        a {
+            color: #1e90ff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        a:hover {
+            text-decoration: underline;
+            color: #ff69b4;
+        }
+        .notes strong { color: #ff6347; }
+        .info-section {
+            background-color: #e7f3ff;
+            border-left: 6px solid #1e90ff;
+            padding: 15px 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+        .weather-info {
+            background-color: #fffbe7;
+            border-left: 6px solid #ffc107;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 500;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .weather-info span {
+            margin-right: 20px;
+        }
+        .tab-nav {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            border-bottom: 3px solid #ff69b4;
+            margin-bottom: 20px;
+            padding-bottom: 5px; /* Space for scrollbar */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        }
+        .tab-nav::-webkit-scrollbar {
+            height: 4px;
+        }
+        .tab-nav::-webkit-scrollbar-thumb {
+            background: #ffcce7;
+            border-radius: 10px;
+        }
+        .tab-button {
+            padding: 12px 20px;
+            cursor: pointer;
+            background-color: #f1f1f1;
+            border: none;
+            outline: none;
+            transition: background-color 0.3s;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            font-size: 1em;
+            font-weight: 700;
+            color: #565656;
+            border-radius: 10px 10px 0 0;
+            margin-right: 5px;
+            margin-bottom: -3px;
+            border: 3px solid transparent;
+        }
+        .tab-button:hover {
+            background-color: #ffcce7;
+        }
+        .tab-button.active {
+            background-color: #ffffff;
+            color: #ff69b4;
+            border-color: #ff69b4 #ff69b4 #ffffff;
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* --- Responsive Design for Mobile --- */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+                border-radius: 0;
+                box-shadow: none;
+                border: none;
+            }
+            body {
+                padding: 0;
+                background-color: #ffffff;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            h2 {
+                font-size: 1.6em;
+            }
+            h3 {
+                font-size: 1.4em;
+            }
+            .tab-nav {
+                justify-content: flex-start;
+            }
+            .tab-button {
+                padding: 10px 15px;
+                font-size: 0.9em;
+                margin-right: 3px;
+            }
+            th, td {
+                padding: 10px 8px;
+            }
+            .map-overview-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .weather-info {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .weather-info span {
+                margin-right: 0;
+            }
+        }
+        /* --- End of Responsive Design --- */
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>✈️ 您的東京自由行 💖</h1>
+        <p style="text-align:center; font-size: 1.1em; color: #6c757d;">旅程日期：2025年7月19日 (週六) - 7月25日 (週五)</p>
+
+        <div class="tab-nav">
+            <button class="tab-button" data-tab="day1">Day 1 (7/19)</button>
+            <button class="tab-button" data-tab="day2">Day 2 (7/20)</button>
+            <button class="tab-button" data-tab="day3">Day 3 (7/21)</button>
+            <button class="tab-button" data-tab="day4">Day 4 (7/22)</button>
+            <button class="tab-button" data-tab="day5">Day 5 (7/23)</button>
+            <button class="tab-button" data-tab="day6">Day 6 (7/24)</button>
+            <button class="tab-button" data-tab="day7">Day 7 (7/25)</button>
+            <button class="tab-button" data-tab="map-overview">🗺️ 地圖總覽</button>
+        </div>
+
+        <!-- Day 1 Content -->
+        <div id="day1" class="tab-content">
+            <h3>Day 1: 7月19日 (週六) - 抵達與池袋之夜 🌃</h3>
+            <div class="weather-info">
+                <span>☀️ 天氣: 大致晴朗</span>
+                <span>🌡️ 溫度: 33°C / 24°C</span>
+                <span>💧 降雨機率: 低</span>
+            </div>
+            <table>
+                <tr><th>18:00</th><td><strong>抵達池袋站</strong><br><strong>交通：</strong> 從 <a href="https://maps.app.goo.gl/fDSaYJd5yq1GfWjQ8" target="_blank">成田機場</a> 搭乘 <strong>Skyliner</strong> 至 <a href="https://maps.app.goo.gl/hYgqgXgYgq1GfWjQ8" target="_blank">日暮里站</a>，換乘 <strong>JR 山手線</strong> 至 <a href="https://maps.app.goo.gl/hYgqgXgYgq1GfWjQ8" target="_blank">池袋站</a>。</td></tr>
+                <tr><th>18:30</th><td><strong>入住 SUPER HOTEL</strong><br>先將行李安頓好，稍作休息。 (<a href="https://www.google.com/maps/search/?api=1&query=Super+Hotel+Ikebukuro" target="_blank">地圖</a>)</td></tr>
+                <tr><th>19:00</th><td><strong>晚餐：中華蕎麥 琥珀</strong><br>除了拉麵，也可以試試店裡的燒賣或叉燒飯。 (<a href="https://www.google.com/maps/search/?api=1&query=中華蕎麥+琥珀+池袋" target="_blank">地圖</a>)</td></tr>
+                <tr><th>20:30</th><td><strong>逛街：唐吉軻德</strong><br><strong>體力考量：</strong> 如果累了，直接去更大更熱鬧的「池袋西口店」是更好的選擇。</td></tr>
+            </table>
+        </div>
+
+        <!-- Day 2 Content -->
+        <div id="day2" class="tab-content">
+            <h3>Day 2: 7月20日 (週日) - 富士山河口湖自駕一日遊 🚗</h3>
+            <div class="weather-info">
+                <span>☀️ 天氣: 大致晴朗</span>
+                <span>🌡️ 溫度: 33°C / 26°C</span>
+                <span>💧 降雨機率: 0%</span>
+                <span>🗻 富士山能見度: <strong style="color: #d9534f;">高 (清晨時段最佳)</strong></span>
+            </div>
+            <table>
+                <tr><th>07:10</th><td><strong>搭乘高速巴士</strong><br><strong>地點：</strong> <a href="https://www.google.com/maps/search/?api=1&query=Ikebukuro+Station+East+Exit+Bus+Terminal" target="_blank">池袋東口巴士站</a>。<strong>務必提早抵達！</strong></td></tr>
+                <tr><th>09:11</th><td><strong>Toyota 租車</strong><br>檢查車況，帶齊駕照日文譯本。 (<a href="https://www.google.com/maps/search/?api=1&query=Toyota+Rent+a+Car+Kawaguchiko" target="_blank">地圖</a>)</td></tr>
+                <tr><th>09:15</th><td><strong>Lawson 河口湖畔店</strong><br>經典打卡點，可以在此購買早餐。 (<a href="https://www.google.com/maps/search/?api=1&query=Lawson+Kawaguchiko" target="_blank">地圖</a>)</td></tr>
+                <tr><th>上午</th><td><strong>新倉山淺間公園</strong><br>需要爬一段階梯才能到達忠靈塔，請穿著好走的鞋子。 (<a href="https://maps.app.goo.gl/sJt4j4k4k4k4k4k4" target="_blank">地圖</a>)</td></tr>
+                <tr><th>上午</th><td><strong>本町通商店街</strong><br>拍攝富士山的絕佳街景地點，請注意來往車輛。 (<a href="https://www.google.com/maps/search/?api=1&query=Honcho+Street+Fujiyoshida" target="_blank">地圖</a>)</td></tr>
+                <tr><th>中午</th><td><strong>忍野八海</strong><br>可以在此逛逛老街，尋找餐廳解決午餐。 (<a href="https://maps.app.goo.gl/sJt4j4k4k4k4k4k4" target="_blank">地圖</a>)</td></tr>
+                <tr><th>下午</th><td><strong>山中湖 & LA2CAFE</strong><br>在湖邊欣賞富士山，並去咖啡廳品嚐哈密瓜冰。 (<a href="https://www.google.com/maps/search/?api=1&query=LA2CAFE+Yamanakako" target="_blank">地圖</a>)</td></tr>
+                <tr><th>19:45</th><td><strong>返回池袋東口</strong><br>搭乘高速巴士返回。</td></tr>
+                <tr><th>晚餐</th><td><strong>池袋麵處花田</strong><br>以濃郁的味噌拉麵聞名。 (<a href="https://www.google.com/maps/search/?api=1&query=麵處花田+池袋" target="_blank">地圖</a>)</td></tr>
+            </table>
+        </div>
+
+        <!-- Day 3 Content -->
+        <div id="day3" class="tab-content">
+            <h3>Day 3: 7月21日 (週一) - 川越懷舊 & 新宿不夜城 🏮</h3>
+            <div class="weather-info">
+                <span>🌥️ 天氣: 多雲間晴</span>
+                <span>🌡️ 溫度: 33°C / 26°C</span>
+                <span>💧 降雨機率: 低</span>
+            </div>
+            <table>
+                <tr><th>09:00</th><td><strong>抵達川越</strong><br><strong>交通：</strong> 從池袋搭乘 <strong>東武東上線</strong> (急行約 30 分鐘)。建議購買「<a href="https://www.koedo.or.jp/foreign/chinese_tr/" target="_blank">小江戶巡迴巴士</a>」一日券。</td></tr>
+                <tr><th>09:30</th><td><strong>川越冰川神社</strong><br>體驗釣「鯛魚神籤」，走過「繪馬隧道」。 (<a href="https://maps.app.goo.gl/sJt4j4k4k4k4k4k4" target="_blank">地圖</a>)</td></tr>
+                <tr><th>10:30</th><td><strong>藏造老街 & 時之鐘</strong><br>必吃地瓜點心和醬油糰子。 (<a href="https://www.google.com/maps/search/?api=1&query=Kurazukuri+Street+Kawagoe" target="_blank">地圖</a>)</td></tr>
+                <tr><th>11:30</th><td><strong>午餐：小川菊鰻魚飯</strong><br>百年名店，建議提早去排隊。 (<a href="https://www.google.com/maps/search/?api=1&query=Ogakiku+Unagi+Kawagoe" target="_blank">地圖</a>)</td></tr>
+                <tr><th>15:00</th><td><strong>抵達新宿車站</strong><br><strong>交通：</strong> 從「本川越站」搭乘 <strong>西武新宿線</strong> 直達「西武新宿站」。</td></tr>
+                <tr><th>下午茶</th><td><strong>HARBS</strong><br>品嚐招牌的水果千層蛋糕。 (LUMINE EST B2)</td></tr>
+                <tr><th>傍晚</th><td><strong>觀賞 3D 貓咪 & 哥吉拉頭像</strong><br>整點有特別表演。 (<a href="https://www.google.com/maps/search/?api=1&query=Cross+Shinjuku+Vision" target="_blank">地圖</a>)</td></tr>
+                <tr><th>18:30</th><td><strong>晚餐：牛舌檸檬</strong><br><strong>已預約</strong>，請準時前往。 (<a href="https://www.google.com/maps/search/?api=1&query=牛たんの檸檬+新宿" target="_blank">地圖</a>)</td></tr>
+            </table>
+        </div>
+
+        <!-- Day 4 Content -->
+        <div id="day4" class="tab-content">
+            <h3>Day 4: 7月22日 (週二) - 淺草、東京車站與池袋 🍡</h3>
+            <div class="weather-info">
+                <span>☀️ 天氣: 大致晴朗</span>
+                <span>🌡️ 溫度: 33°C / 27°C</span>
+                <span>💧 降雨機率: 低</span>
+            </div>
+            <table>
+                <tr><th>09:10</th><td><strong>遊覽淺草</strong><br>先上 <a href="https://www.google.com/maps/search/?api=1&query=Asakusa+Culture+Tourist+Information+Center" target="_blank">淺草文化觀光中心</a> 8F 展望台看全景，再逛雷門。</td></tr>
+                <tr><th>11:00</th><td><strong>午餐：米久本店</strong><br>品嚐道地的壽喜燒。 (<a href="https://www.google.com/maps/search/?api=1&query=Miyoshi+Honten+Asakusa" target="_blank">地圖</a>)</td></tr>
+                <tr><th>13:15</th><td><strong>東京車站深度遊</strong><br><strong>重點：</strong> 專心逛地下一樓的「東京動漫人物街」和「東京拉麵一條街」。</td></tr>
+                <tr><th>17:00</th><td><strong>池袋太陽城</strong><br>時間充裕可考慮去陽光水族館或 Sunshine 60 展望台。 (<a href="https://www.google.com/maps/search/?api=1&query=Sunshine+City+Ikebukuro" target="_blank">地圖</a>)</td></tr>
+            </table>
+        </div>
+
+        <!-- Day 5 Content -->
+        <div id="day5" class="tab-content">
+            <h3>Day 5: 7月23日 (週三) - 橫濱港未來一日遊 🎡</h3>
+            <div class="weather-info">
+                <span>🌤️ 天氣: 局部晴朗</span>
+                <span>🌡️ 溫度: 34°C / 26°C</span>
+                <span>💧 降雨機率: 低</span>
+            </div>
+            <table>
+                <tr><th>09:30</th><td><strong>抵達櫻木町站</strong><br><strong>交通：</strong> 從池袋搭乘 <strong>JR 湘南新宿線</strong> 或 <strong>東急東橫線</strong> (直通港未來線) 前往橫濱。建議購買「港未來線一日券」。</td></tr>
+                <tr><th>上午</th><td><strong>合味道紀念館 (Cup Noodles Museum)</strong><br>體驗製作屬於自己的泡麵，非常有趣！ (<a href="https://www.google.com/maps/search/?api=1&query=Cup+Noodles+Museum+Yokohama" target="_blank">地圖</a>)</td></tr>
+                <tr><th>中午</th><td><strong>紅磚倉庫 (Red Brick Warehouse)</strong><br>在類似駁二的文創區逛特色小店，並在此處的美食廣場或餐廳解決午餐。 (<a href="https://www.google.com/maps/search/?api=1&query=Yokohama+Red+Brick+Warehouse" target="_blank">地圖</a>)</td></tr>
+                <tr><th>下午</th><td><strong>山下公園</strong><br>從紅磚倉庫沿著港邊散步至山下公園，欣賞港口景色。 (<a href="https://www.google.com/maps/search/?api=1&query=Yamashita+Park+Yokohama" target="_blank">地圖</a>)</td></tr>
+                <tr><th></th><td><strong>中華街</strong><br>體驗充滿活力的氛圍，品嚐各種中華小吃。 (<a href="https://www.google.com/maps/search/?api=1&query=Yokohama+Chinatown" target="_blank">地圖</a>)</td></tr>
+                <tr><th></th><td><strong>元町商店街</strong><br>逛逛優雅的精品店和咖啡廳。 (<a href="https://www.google.com/maps/search/?api=1&query=Motomachi+Shopping+Street+Yokohama" target="_blank">地圖</a>)</td></tr>
+                <tr><th>傍晚</th><td><strong>Cosmo World (宇宙世界)</strong><br>入場免費，可以拍夜晚漂亮的摩天輪，或體驗刺激的遊樂設施。 (<a href="https://www.google.com/maps/search/?api=1&query=Cosmo+World+Yokohama" target="_blank">地圖</a>)</td></tr>
+                <tr><th>晚上</th><td><strong>空中纜車 & 地標大樓夜景</strong><br><strong>路線：</strong> 搭乘 <a href="https://www.google.com/maps/search/?api=1&query=Yokohama+Air+Cabin" target="_blank">空中纜車</a> 從運河公園站到櫻木町站，再步行至 <a href="https://www.google.com/maps/search/?api=1&query=Landmark+Tower+Sky+Garden" target="_blank">地標大樓</a> 的空中花園，欣賞橫濱港百萬夜景的完美句點。</td></tr>
+            </table>
+        </div>
+
+        <!-- Day 6 Content -->
+        <div id="day6" class="tab-content">
+            <h3>Day 6: 7月24日 (週四) - 原宿潮流 & 澀谷之夜 🛍️</h3>
+            <div class="weather-info">
+                <span>☀️ 天氣: 晴朗</span>
+                <span>🌡️ 溫度: 33°C / 26°C</span>
+                <span>💧 降雨機率: 低</span>
+            </div>
+            <table>
+                <tr><th>09:40</th><td><strong>明治神宮</strong><br>感受市中心的寧靜聖地。 (<a href="https://maps.app.goo.gl/sJt4j4k4k4k4k4k4" target="_blank">地圖</a>)</td></tr>
+                <tr><th>11:00</th><td><strong>原宿竹下通</strong><br>逛藥妝店和潮流小店。 (<a href="https://www.google.com/maps/search/?api=1&query=Takeshita+Street+Harajuku" target="_blank">地圖</a>)</td></tr>
+                <tr><th>14:00</th><td><strong>表參道 & On 旗艦店</strong><br>逛精品大道。 (<a href="https://www.google.com/maps/search/?api=1&query=On+Tokyo+Flagship+Store" target="_blank">地圖</a>)</td></tr>
+                <tr><th>15:30</th><td><strong>澀谷 PARCO</strong><br><strong>6F 是必逛重點！</strong> (任天堂、寶可夢中心等)。 (<a href="https://www.google.com/maps/search/?api=1&query=Shibuya+PARCO" target="_blank">地圖</a>)</td></tr>
+                <tr><th>20:40</th><td><strong>SHIBUYA SKY</strong><br><strong>已購票</strong>，請務必在預約時間前抵達入口。 (<a href="https://www.google.com/maps/search/?api=1&query=Shibuya+Sky" target="_blank">地圖</a>)</td></tr>
+            </table>
+        </div>
+
+        <!-- Day 7 Content -->
+        <div id="day7" class="tab-content">
+            <h3>Day 7: 7月25日 (週五) - 最後衝刺與歸途 ✈️</h3>
+            <div class="weather-info">
+                <span>🌤️ 天氣: 局部晴朗</span>
+                <span>🌡️ 溫度: 34°C / 26°C</span>
+                <span>💧 降雨機率: 低</span>
+            </div>
+            <table>
+                <tr><th>上午</th><td><strong>退房 & 寄放行李</strong><br><strong>第一要務：</strong> 在池袋車站找到置物櫃，鎖好所有行李。</td></tr>
+                <tr><th>10:00</th><td><strong>池袋太陽城最後購物</strong><br><strong>時間有限 (約 2 小時)！</strong> 請專注在寶可夢中心等最想逛的店。</td></tr>
+                <tr><th>12:20</th><td><strong>取回行李 & 前往日暮里</strong><br>從池袋站搭乘 <strong>JR 山手線</strong> 至日暮里站。</td></tr>
+                <tr><th>13:10</th><td><strong>搭乘 Skyliner</strong><br>放鬆休息，準備前往機場。</td></tr>
+                <tr><th>13:50</th><td><strong>抵達成田機場</strong><br>辦理登機手續，安心地逛免稅店！</td></tr>
+            </table>
+        </div>
+
+        <!-- Map Overview Content -->
+        <div id="map-overview" class="tab-content">
+            <h3>🗺️ 景點地圖總覽</h3>
+            <style>
+                .map-overview-container {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 20px;
+                }
+                .map-day-column {
+                    flex: 1;
+                    min-width: 280px;
+                    background-color: #f9f9f9;
+                    padding: 15px;
+                    border-radius: 10px;
+                    border: 1px solid #ffcce7;
+                }
+                .map-day-column h4 {
+                    margin-top: 0;
+                    color: #ff69b4;
+                    border-bottom: 2px solid #ffcce7;
+                    padding-bottom: 8px;
+                }
+                .map-day-column ul {
+                    list-style-type: none;
+                    padding-left: 0;
+                }
+                .map-day-column li {
+                    margin-bottom: 10px;
+                }
+                .map-day-column a {
+                    text-decoration: none;
+                    color: #1e90ff;
+                    font-weight: 500;
+                }
+                .map-day-column a:hover {
+                    text-decoration: underline;
+                }
+            </style>
+            <div class="map-overview-container">
+                <div class="map-day-column">
+                    <h4>Day 1: 抵達與池袋之夜</h4>
+                    <ul>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Narita+Airport" target="_blank">成田機場</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Nippori+Station" target="_blank">日暮里站</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Ikebukuro+Station" target="_blank">池袋站</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Super+Hotel+Ikebukuro" target="_blank">SUPER HOTEL 池袋</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=中華蕎麥+琥珀+池袋" target="_blank">中華蕎麥 琥珀</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Don+Quijote+Ikebukuro+Nishiguchi" target="_blank">唐吉軻德 池袋西口店</a></li>
+                    </ul>
+                    <h4>Day 2: 富士山河口湖</h4>
+                    <ul>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Ikebukuro+Station+East+Exit+Bus+Terminal" target="_blank">池袋東口巴士站</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Toyota+Rent+a+Car+Kawaguchiko" target="_blank">Toyota 租車 (河口湖)</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Lawson+Kawaguchiko" target="_blank">Lawson 河口湖畔店</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Arakurayama+Sengen+Park" target="_blank">新倉山淺間公園</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Honcho+Street+Fujiyoshida" target="_blank">本町通商店街</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Oshino+Hakkai" target="_blank">忍野八海</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=LA2CAFE+Yamanakako" target="_blank">山中湖 & LA2CAFE</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=麵處花田+池袋" target="_blank">池袋麵處花田</a></li>
+                    </ul>
+                </div>
+                <div class="map-day-column">
+                    <h4>Day 3: 川越 & 新宿</h4>
+                    <ul>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Kawagoe+Station" target="_blank">川越站</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Kawagoe+Hikawa+Shrine" target="_blank">川越冰川神社</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Kurazukuri+Street+Kawagoe" target="_blank">藏造老街 & 時之鐘</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Ogakiku+Unagi+Kawagoe" target="_blank">小川菊鰻魚飯</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Shinjuku+Station" target="_blank">新宿車站</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=HARBS+Lumine+Est" target="_blank">HARBS (LUMINE EST)</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Cross+Shinjuku+Vision" target="_blank">3D 貓咪 (Cross Shinjuku Vision)</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=牛たんの檸檬+新宿" target="_blank">牛舌檸檬</a></li>
+                    </ul>
+                    <h4>Day 4: 淺草 & 東京車站</h4>
+                    <ul>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Asakusa+Culture+Tourist+Information+Center" target="_blank">淺草文化觀光中心</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Kaminarimon+Gate" target="_blank">雷門</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Miyoshi+Honten+Asakusa" target="_blank">米久本店</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Station" target="_blank">東京車站</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Sunshine+City+Ikebukuro" target="_blank">池袋太陽城</a></li>
+                    </ul>
+                </div>
+                <div class="map-day-column">
+                    <h4>Day 5: 橫濱港未來</h4>
+                    <ul>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Sakuragicho+Station" target="_blank">櫻木町站</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Cup+Noodles+Museum+Yokohama" target="_blank">合味道紀念館</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Yokohama+Red+Brick+Warehouse" target="_blank">紅磚倉庫</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Yamashita+Park+Yokohama" target="_blank">山下公園</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Yokohama+Chinatown" target="_blank">中華街</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Motomachi+Shopping+Street+Yokohama" target="_blank">元町商店街</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Cosmo+World+Yokohama" target="_blank">Cosmo World</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Yokohama+Air+Cabin" target="_blank">空中纜車</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Landmark+Tower+Sky+Garden" target="_blank">地標大樓</a></li>
+                    </ul>
+                    <h4>Day 6: 原宿 & 澀谷</h4>
+                    <ul>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Meiji+Jingu" target="_blank">明治神宮</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Takeshita+Street+Harajuku" target="_blank">原宿竹下通</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=On+Tokyo+Flagship+Store" target="_blank">表參道 & On 旗艦店</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Shibuya+PARCO" target="_blank">澀谷 PARCO</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Shibuya+Sky" target="_blank">SHIBUYA SKY</a></li>
+                    </ul>
+                    <h4>Day 7: 歸途</h4>
+                    <ul>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Ikebukuro+Station" target="_blank">池袋車站</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Sunshine+City+Ikebukuro" target="_blank">池袋太陽城</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Nippori+Station" target="_blank">日暮里站</a></li>
+                        <li><a href="https://www.google.com/maps/search/?api=1&query=Narita+Airport" target="_blank">成田機場</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            function switchTab(activeButton) {
+                // Deactivate all buttons and hide all content panels
+                tabButtons.forEach(button => {
+                    button.classList.remove('active');
+                });
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // Get the target content ID from the data-tab attribute
+                const targetId = activeButton.getAttribute('data-tab');
+                const targetContent = document.getElementById(targetId);
+
+                // Activate the clicked button and its corresponding content panel
+                activeButton.classList.add('active');
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                }
+            }
+
+            // Add click event listener to each tab button
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => switchTab(button));
+            });
+
+            // Set the initial state: activate the first tab and its content
+            if (tabButtons.length > 0) {
+                switchTab(tabButtons[0]);
+            }
+        });
+    </script>
+
+</body>
+</html>
